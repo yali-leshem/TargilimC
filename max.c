@@ -9,6 +9,6 @@
 int main () {
     int x = 5;
     int y = 7;
-    int z = y * (x+y >= 2*x) + x * (x+y > 2*y); // If x+y >= 2x then y > x, otherwise x > y.
+    int z = x * (x >= y) + y * (y > x);
     printf("The max numebr is %d \n", z);
 }
