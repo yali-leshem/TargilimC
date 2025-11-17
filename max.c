@@ -1,6 +1,6 @@
 /*------------------------------------------------------
 * Filename: max.c
-* Description: Finding the maximum out of three numbers in just 4 lines
+* Description: Finding the maximum out of two numbers in just 4 lines
 * Author: Yali Leshem
 -------------------------------------------------------*/
 
