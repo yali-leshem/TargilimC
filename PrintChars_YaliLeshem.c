@@ -33,7 +33,7 @@ int main () {
 
     for (i = 0; i < square_len; i++) {
         for (j = 0; j < square_len; j++)
-            printf(" %c", special_char);
+            printf("%c", special_char);
         printf("\n");
     }
 
