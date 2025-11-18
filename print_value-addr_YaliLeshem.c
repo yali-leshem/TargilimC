@@ -24,11 +24,11 @@ void value_address (char chars[], int ints[]) {
 
     for (index = 0; index < LEN; index++) {
         printf("The %d-th char is: %c \n", index+1, *(p1+index)); // access value using pointer
-        printf("The address is: 0x%x \n", (p1+index));
+        printf("The address is: %p \n", (void*)p1+index);
         printf("\n");
 
         printf("The %d-th integer is: %d \n", index+1, ints[index]); // access value using index
-        printf("The address is: 0x%x \n", (p2+index));
+        printf("The address is: %p \n",(void*)p2+index);
         printf("\n");
     }
 }
@@ -49,4 +49,5 @@ int main() {
 
     value_address(chars, ints);
     return 0;
+
 }
