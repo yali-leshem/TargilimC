@@ -1,3 +1,9 @@
+/*------------------------------------------------------
+* Filename: median_YaliLeshem.c
+* Description: define and use a dynamic struct representing time
+* Author: Yali Leshem
+-------------------------------------------------------*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,7 +14,16 @@ void swap(int *p1, int *p2) {
     *p2 = temp;
 }
 
-int read_data(int **list_nums, int *total_count) {
+/*------------------------------------------------------
+* Function Name - read_integers
+*
+* Function Purpose - Use realloc to recieve an unknown number of integers
+*
+* Parameters – **listnums - an address of a pointer to the list of numbers inserted by user, 
+* *total_count - used to alter the count of how many elements has the user inputted
+*
+-------------------------------------------------------*/
+int read_integers(int **list_nums, int *total_count) {
     int input, count = 0, *numbers = NULL;
 
     printf("enter integers: \n");
@@ -21,7 +36,7 @@ int read_data(int **list_nums, int *total_count) {
             return 1;
         }
         
-        numbers = next_int; // points to beginning of memory
+        numbers = next_int; // points to new beginning of memory
         *(numbers + count) = input; // store into memory the next integer
         count++;
     }
@@ -31,11 +46,12 @@ int read_data(int **list_nums, int *total_count) {
     return 0;
 }
 
+// using bubble sort algorithm for all integers in memory by going over iteratively
 void bubble_sort(int *nums, int count) {
     int i, j;
 
     for (i = 0; i < count; i++) {
-        for (j = 0; j < count; j++) { // using bubble sort algorithm for all integers in memory by going over until count
+        for (j = i+1; j < count; j++) { // No need to sort the already sorted 0-i indexes. 
             if (*(nums + i) > *(nums + j)) {
                 swap((nums + i), (nums + j)); // if two elements are in wrong order, swap between them, by their addresses
             }
@@ -50,33 +66,31 @@ int main() {
         // If an error was found during memory allocation - return and stop immediately the run
         return 1;
     }
-    
-    bubble_sort(numbers, count);
 
     if (count == 0) {
         printf("No number entered so median isn't avaliable \n");
         return 1;
     }
 
+    bubble_sort(numbers, count); // Sort the element
     printf("all numbers, sorted: ");
-    if (count > 0) {
-        for (int index = count-1; index > -1; index--) {
-            printf("%d ", *(numbers + index));
-        }
-    }
+    
+    for (int index = count-1; index > -1; index--) // print sorted numbers
+        printf("%d ", *(numbers + index));
     printf("\n");
 
     double median;
     int mid_point = count / 2;
 
     if (count % 2 != 0)
-        median = (double)*(numbers + mid_point); // the middle element is the median in case of odd-lengthed sorted sequence
+        median = (double) *(numbers + mid_point); // the middle element is the median in case of odd-lengthed sorted sequence
     else
-        median = ((double) *(numbers + (mid_point - 1)) + *(numbers + mid_point)) / 2.0; // median in even-lengthed sorted sequence is a[(mid-1)/2]+a[mid/2] / 2
+        median = ((double) *(numbers + (mid_point - 1)) + *(numbers + mid_point)) / 2; // median in even-lengthed sorted sequence is a[(mid-1)/2]+a[mid/2] / 2
         
-    printf("Median is: %f \n", median);
+    printf("median is: %f \n", median);
 
-    free(numbers); // free all used memory from dynamic allocation
+    free(numbers); // free the used memory from dynamic allocation
     
     return 0;
+
 }
