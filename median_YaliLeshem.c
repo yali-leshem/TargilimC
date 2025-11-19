@@ -1,11 +1,14 @@
 /*------------------------------------------------------
 * Filename: median_YaliLeshem.c
-* Description: define and use a dynamic struct representing time
+* Description: recieve an unknown amount of integers into memory and calculate their median value
 * Author: Yali Leshem
 -------------------------------------------------------*/
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#define SUCCESS 0
+#define FAILURE 1
 
 void swap(int *p1, int *p2) {
     // recieve p1 and p2 addresses in memory to swap between their contents
@@ -22,6 +25,8 @@ void swap(int *p1, int *p2) {
 * Parameters – **listnums - an address of a pointer to the list of numbers inserted by user, 
 * *total_count - used to alter the count of how many elements has the user inputted
 *
+* Return value - read_integers returns 0 for success and 1 for failure.
+*
 -------------------------------------------------------*/
 int read_integers(int **list_nums, int *total_count) {
     int input, count = 0, *numbers = NULL;
@@ -33,7 +38,7 @@ int read_integers(int **list_nums, int *total_count) {
         if (next_int == NULL) {
             printf("dynamic memory allocation failed \n");
             free(numbers); // if dynamic memory failed, free the used ones and exit function
-            return 1;
+            return FAILURE;
         }
         
         numbers = next_int; // points to new beginning of memory
@@ -43,11 +48,11 @@ int read_integers(int **list_nums, int *total_count) {
 
     *list_nums = numbers; // keep the numbers entered and their count values, in their addresses
     *total_count = count;
-    return 0;
+    return SUCCESS;
 }
 
-// using bubble sort algorithm for all integers in memory by going over iteratively
-void bubble_sort(int *nums, int count) {
+// using selection sort algorithm for all integers in memory by going over iteratively
+void selection_sort(int *nums, int count) {
     int i, j;
 
     for (i = 0; i < count; i++) {
@@ -62,20 +67,20 @@ void bubble_sort(int *nums, int count) {
 int main() {
     int index, count = 0, *numbers = NULL;
     
-    if (read_data(&numbers, &count) != 0) {
+    if (read_integers(&numbers, &count) != 0) {
         // If an error was found during memory allocation - return and stop immediately the run
-        return 1;
+        return FAILURE;
     }
 
     if (count == 0) {
         printf("No number entered so median isn't avaliable \n");
-        return 1;
+        return FAILURE;
     }
 
-    bubble_sort(numbers, count); // Sort the element
+    selection_sort(numbers, count); // Sort the element
     printf("all numbers, sorted: ");
     
-    for (int index = count-1; index > -1; index--) // print sorted numbers
+    for (index = count-1; index > -1; index--) // print sorted numbers
         printf("%d ", *(numbers + index));
     printf("\n");
 
@@ -91,6 +96,7 @@ int main() {
 
     free(numbers); // free the used memory from dynamic allocation
     
-    return 0;
+    return SUCCESS;
 
 }
+
